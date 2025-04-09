@@ -18,18 +18,18 @@ public class Main_18427_dp_함께블록쌓기 {
             }
         }
         int[][] dp = new int[n + 1][h + 1];
-        boolean[][] posible = new boolean[n + 1][h + 1];
+        boolean[][] possible = new boolean[n + 1][h + 1];
         dp[0][0] = 1;
-        posible[0][0] = true;
+        possible[0][0] = true;
         for (int i = 1; i <= n; i++) {
             for (int j = 0; j <= h; j++) {
                 dp[i][j] = dp[i - 1][j];
-                posible[i][j] = posible[i - 1][j];
+                possible[i][j] = possible[i - 1][j];
                 for (int k = 0; k < m; k++) {
                     if(students[i-1][k] == 0) break;
-                    if (j - students[i - 1][k] >= 0 && posible[i - 1][j - students[i - 1][k]]) {
+                    if (j - students[i - 1][k] >= 0 && possible[i - 1][j - students[i - 1][k]]) {
                         dp[i][j] = (dp[i][j] + dp[i - 1][j - students[i - 1][k]]) % 10007;
-                        posible[i][j] = true;
+                        possible[i][j] = true;
                     }
                 }
             }
