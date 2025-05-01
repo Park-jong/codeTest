@@ -35,17 +35,17 @@ public class Main_1034_adhoc_램프 {
         bw.close();
         br.close();
     }
-}
 
-class Row {
-    int count;
-    int zero;
+    static class Row {
+        int count;
+        int zero;
 
-    Row(int zero) {
-        this.zero = zero;
-    }
+        Row(int zero) {
+            this.zero = zero;
+        }
 
-    void increase() {
-        count++;
+        void increase() {
+            count++;
+        }
     }
 }

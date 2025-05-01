@@ -20,7 +20,7 @@ public class Main_14621_graph_나만안되는연애 {
         }
 
         set = makeSet(n);
-        PriorityQueue<Edge> pq = new PriorityQueue<>((a, b)-> Integer.compare(a.distance, b.distance));
+        PriorityQueue<Edge> pq = new PriorityQueue<>((a, b) -> Integer.compare(a.distance, b.distance));
 
         for (int i = 0; i < m; i++) {
             st = new StringTokenizer(br.readLine());
@@ -38,7 +38,7 @@ public class Main_14621_graph_나만안되는연애 {
                 linkCount++;
                 result += current.distance;
             }
-            if(linkCount == n - 1) break;
+            if (linkCount == n - 1) break;
         }
 
         bw.write(String.valueOf(linkCount == n - 1 ? result : -1));
@@ -67,16 +67,16 @@ public class Main_14621_graph_나만안되는연애 {
         set[rootB] = rootA;
         return true;
     }
-}
 
-class Edge {
-    int point1;
-    int point2;
-    int distance;
+    static class Edge {
+        int point1;
+        int point2;
+        int distance;
 
-    Edge(int point1, int point2, int distance) {
-        this.point1 = point1;
-        this.point2 = point2;
-        this.distance = distance;
+        Edge(int point1, int point2, int distance) {
+            this.point1 = point1;
+            this.point2 = point2;
+            this.distance = distance;
+        }
     }
 }
