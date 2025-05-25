@@ -14,13 +14,13 @@ public class Main_2437_greedy_저울 {
         for (int i = 0; i < n; i++) {
             num[i] = Integer.parseInt(st.nextToken());
         }
-        int sum = 0;
+        int sum = 1;
         Arrays.sort(num);
         for (int i = 0; i < n; i++) {
-            if (sum + 1 >= num[i]) sum += num[i];
+            if (sum >= num[i]) sum += num[i];
             else break;
         }
-        bw.write(String.valueOf(sum + 1));
+        bw.write(String.valueOf(sum));
         bw.close();
         br.close();
     }
