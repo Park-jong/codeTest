@@ -56,58 +56,10 @@ public class Main_16235_나무재테크 {
             add(area, age);
         }
         int[][] young = new int[n + 1][n + 1];
-        for(int tc = 0; tc < k; tc++) {
-            for (int i = 1; i <= n; i++) {
-                for (int j = 1; j <= n; j++) {
-                    Area area = areas[i][j];
-                    Tree current = area.start;
-                    area.totalCount = 0;
-                    while (current != null) {
-                        int mul = current.age * current.count;
-                        if (mul > ground[i][j]) {
-                            int count = current.count;
-                            current.count = ground[i][j] / current.age;
-                            mul = current.age * current.count;
-                            death[i][j] += (count - current.count) * (current.age >> 1);
-                        }
-                        ground[i][j] -= mul;
-                        current.age++;
-                        if (current.count > 0 && current.age % 5 == 0) {
-                            for (int d = 0; d < 8; d++) {
-                                int newX = i + dx[d];
-                                int newY = j + dy[d];
-                                if (newX > 0 && newY > 0 && newX <= n && newY <= n) {
-                                    young[newX][newY] += current.count;
-                                }
-                            }
-                        }
-                        area.totalCount += current.count;
-                        if (current.next != null && current.next.count == 0) {
-                            current.next = null;
-                        }
-                        current = current.next;
-                    }
-                }
-            }
-            for (int i = 1; i <= n; i++) {
-                for (int j = 1; j <= n; j++) {
-                    if(young[i][j] > 0) {
-                        areas[i][j].add(young[i][j]);
-                        areas[i][j].totalCount += young[i][j];
-                        young[i][j] = 0;
-                    }
-                    ground[i][j] += death[i][j] + A[i][j];
-                    death[i][j] = 0;
-                }
-            }
+        for (int tc = 0; tc < k; tc++) {
+            surviveOrDead(areas, young);
         }
-        int total = 0;
-        for (int i = 1; i <= n; i++) {
-            for (int j = 1; j <= n; j++) {
-                total += areas[i][j].totalCount;
-            }
-        }
-        return total;
+        return countTotal(areas);
     }
 
     static void add(Area area, int age) {
@@ -118,6 +70,78 @@ public class Main_16235_나무재테크 {
         } else {
             area.start.add();
         }
+    }
+
+    static void surviveOrDead(Area[][] areas, int[][] young){
+        for (int i = 1; i <= n; i++) {
+            for (int j = 1; j <= n; j++) {
+                Area area = areas[i][j];
+                Tree current = area.start;
+                area.totalCount = 0;
+                while (current != null) {
+                    takeNutrientAndDeadOrGrow(current, i, j);
+                    makeYoungTree(current, young, i, j);
+                    area.totalCount += current.count;
+                    removeNextIfNull(current);
+                    current = current.next;
+                }
+            }
+        }
+        supply(areas, young);
+    }
+
+    static void takeNutrientAndDeadOrGrow(Tree tree, int x, int y){
+        int mul = tree.age * tree.count;
+        if (mul > ground[x][y]) {
+            int count = tree.count;
+            tree.count = ground[x][y] / tree.age;
+            mul = tree.age * tree.count;
+            death[x][y] += (count - tree.count) * (tree.age >> 1);
+        }
+        ground[x][y] -= mul;
+        tree.age++;
+    }
+
+    static void makeYoungTree(Tree tree, int[][] young, int x, int y){
+        if (tree.count > 0 && tree.age % 5 == 0) {
+            for (int d = 0; d < 8; d++) {
+                int newX = x + dx[d];
+                int newY = y + dy[d];
+                if (newX > 0 && newY > 0 && newX <= n && newY <= n) {
+                    young[newX][newY] += tree.count;
+                }
+            }
+        }
+    }
+
+    static void removeNextIfNull(Tree tree){
+        if (tree.next != null && tree.next.count == 0) {
+            tree.next = null;
+        }
+    }
+
+    static void supply(Area[][] areas, int[][] young){
+        for (int i = 1; i <= n; i++) {
+            for (int j = 1; j <= n; j++) {
+                if (young[i][j] > 0) {
+                    areas[i][j].add(young[i][j]);
+                    areas[i][j].totalCount += young[i][j];
+                    young[i][j] = 0;
+                }
+                ground[i][j] += death[i][j] + A[i][j];
+                death[i][j] = 0;
+            }
+        }
+    }
+
+    static int countTotal(Area[][] areas){
+        int total = 0;
+        for (int i = 1; i <= n; i++) {
+            for (int j = 1; j <= n; j++) {
+                total += areas[i][j].totalCount;
+            }
+        }
+        return total;
     }
 
     static class Tree {
