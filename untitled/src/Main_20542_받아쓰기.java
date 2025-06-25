@@ -1,5 +1,5 @@
 import java.io.*;
-import java.util.StringTokenizer;
+import java.util.*;
 
 public class Main_20542_받아쓰기 {
 
@@ -11,32 +11,38 @@ public class Main_20542_받아쓰기 {
         int m = Integer.parseInt(st.nextToken());
         String answer = br.readLine();
         String correct = br.readLine();
-        int big = Math.max(n, m);
-        int result = Math.min(big, getChangeCount(n, m, answer, correct));
+        int result = getChangeCount(n, m, answer, correct);
         bw.write(String.valueOf(result));
         bw.close();
         br.close();
     }
 
     static int getChangeCount(int n, int m, String answer, String correct) {
-        int[][] lcs = longestCommon(n, m, answer, correct);
-        return requireChange(lcs, n, m);
+        return shortestChange(n, m, answer, correct);
     }
 
-    static int[][] longestCommon(int n, int m, String answer, String correct) {
-        int[][] lcs = new int[n + 1][m + 1];
+    static int shortestChange(int n, int m, String answer, String correct) {
+        int[][] dp = new int[n + 1][m + 1];
+        final int MAX_VALUE = Integer.MAX_VALUE >> 1;
+        for (int i = 1; i <= m; i++) {
+            dp[0][i] = i;
+        }
         for (int i = 1; i <= n; i++) {
+            Arrays.fill(dp[i], MAX_VALUE);
+            dp[i][0] = i;
             for (int j = 1; j <= m; j++) {
                 char a = answer.charAt(i - 1);
                 char c = correct.charAt(j - 1);
                 if (isSameOrSimilar(a, c)) {
-                    lcs[i][j] = lcs[i - 1][j - 1] + 1;
-                } else {
-                    lcs[i][j] = Math.max(lcs[i][j - 1], lcs[i - 1][j]);
+                    dp[i][j] = Math.min(dp[i][j], dp[i - 1][j - 1]);
                 }
+                dp[i][j] = Math.min(dp[i - 1][j - 1] + 1, dp[i][j]);
+                dp[i][j] = Math.min(dp[i - 1][j] + 1, dp[i][j]);
+                dp[i][j] = Math.min(dp[i][j - 1] + 1, dp[i][j]);
+
             }
         }
-        return lcs;
+        return dp[n][m];
     }
 
     static boolean isSameOrSimilar(char a, char c) {
@@ -49,30 +55,5 @@ public class Main_20542_받아쓰기 {
 
     static boolean isSimilarV(char a, char c) {
         return a == 'v' && c == 'w';
-    }
-
-    static int requireChange(int[][] lcs, int n, int m) {
-        int answer = 0;
-        while (true) {
-            if (n == 0 || m == 0) {
-                answer += m + n;
-                break;
-            }
-            if (lcs[n][m] == lcs[n - 1][m - 1]) {
-                answer++;
-                n--;
-                m--;
-            } else if (lcs[n][m] == lcs[n - 1][m]) {
-                answer++;
-                n--;
-            } else if (lcs[n][m] == lcs[n][m - 1]) {
-                answer++;
-                m--;
-            } else {
-                n--;
-                m--;
-            }
-        }
-        return answer;
     }
 }
