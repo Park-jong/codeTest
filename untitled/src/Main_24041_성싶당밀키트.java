@@ -8,8 +8,6 @@ public class Main_24041_성싶당밀키트 {
 
     static List<Ingredient> ingredients0 = new ArrayList<>();
     static List<Ingredient> ingredients1 = new ArrayList<>();
-    static long maxLimit;
-    static long sSum;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -30,8 +28,6 @@ public class Main_24041_성싶당밀키트 {
             } else {
                 ingredients0.add(ingredient);
             }
-            sSum += speed;
-            maxLimit = Math.max(maxLimit, limit);
         }
         long result = binarySearchDay(g, k);
         bw.write(String.valueOf(result));
