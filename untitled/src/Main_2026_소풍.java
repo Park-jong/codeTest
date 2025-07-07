@@ -84,8 +84,8 @@ public class Main_2026_소풍 {
     static String getResult(boolean isPossible) {
         StringBuilder sb = new StringBuilder();
         if (isPossible) {
-            for (int i = 0; i < k; i++) {
-                sb.append(resultArray[i]).append("\n");
+            for (int i : resultArray) {
+                sb.append(i).append("\n");
             }
         } else {
             sb.append(-1);
