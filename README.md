@@ -1,3 +1,1 @@
-# testtest
-# testtest
-# testtest
+# 연습문제
