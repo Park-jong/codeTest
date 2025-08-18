@@ -1,6 +1,4 @@
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.StringTokenizer;
 
 public class Main_30686_과제제출하기 {
@@ -8,15 +6,19 @@ public class Main_30686_과제제출하기 {
     static int min = Integer.MAX_VALUE;
     static int[] day;
     static boolean[] isSolved;
+    static int n;
+    static int m;
+    static int[] knowledge;
+    static int[][] problem;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         StringTokenizer st = new StringTokenizer(br.readLine());
-        int n = Integer.parseInt(st.nextToken());
-        int m = Integer.parseInt(st.nextToken());
-        int[] knowledge = new int[n];
-        int[][] problem = new int[m][];
+        n = Integer.parseInt(st.nextToken());
+        m = Integer.parseInt(st.nextToken());
+        knowledge = new int[n];
+        problem = new int[m][];
         day = new int[n];
         isSolved = new boolean[m];
         st = new StringTokenizer(br.readLine());
@@ -30,36 +32,37 @@ public class Main_30686_과제제출하기 {
                 problem[i][j] = Integer.parseInt(st.nextToken()) - 1;
             }
         }
-        dfs(problem, knowledge, 0, 0);
+        order(0, 0);
         bw.write(String.valueOf(min));
         bw.close();
         br.close();
     }
 
-    static void dfs(int[][] problem, int[] knowledge, int depth, int count) {
-        if (depth == problem.length) {
-            min = Math.min(min, count);
+    static void order(int depth, int count) {
+        if (count >= min) return;
+        if (depth == m) {
+            min = count;
             return;
         }
-        for (int i = 0; i < problem.length; i++) {
+        for (int i = 0; i < m; i++) {
             if (isSolved[i]) continue;
-            List<Integer> list = new ArrayList<>();
-            List<Integer> before = new ArrayList<>();
+            int[] beforeIndex = new int[problem[i].length];
+            int[] beforeValue = new int[problem[i].length];
+            int size = 0;
             for (int require : problem[i]) {
                 if (day[require] <= depth) {
-                    list.add(require);
-                    before.add(day[require]);
+                    beforeIndex[size] = require;
+                    beforeValue[size++] = day[require];
                     day[require] = depth + knowledge[require];
                 }
             }
-            int nextCount = count + list.size();
+            int nextCount = count + size;
             isSolved[i] = true;
-            dfs(problem, knowledge, depth + 1, nextCount);
+            order(depth + 1, nextCount);
             isSolved[i] = false;
-            int size = list.size();
             for (int j = 0; j < size; j++) {
-                int index = list.get(j);
-                int b = before.get(j);
+                int index = beforeIndex[j];
+                int b = beforeValue[j];
                 day[index] = b;
             }
         }
