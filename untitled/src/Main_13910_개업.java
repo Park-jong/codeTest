@@ -1,6 +1,5 @@
 import java.io.*;
-import java.util.Arrays;
-import java.util.StringTokenizer;
+import java.util.*;
 
 public class Main_13910_개업 {
 
@@ -22,20 +21,26 @@ public class Main_13910_개업 {
     }
 
     static int findMinOrder(int n, int m, int[] s) {
-        int[][] dp = new int[m + 1][n + 1];
         int MAX_VALUE = Integer.MAX_VALUE >> 1;
-        for (int i = 0; i <= m; i++) {
-            Arrays.fill(dp[i], MAX_VALUE);
-            dp[i][0] = 1;
+        int[] dp = new int[n + 1];
+        Arrays.fill(dp, MAX_VALUE);
+        dp[0] = 0;
+        for (int i = 0; i < m; i++) {
+            dp[s[i]] = 1;
         }
-        for (int i = 1; i <= m; i++) {
-            for (int j = 1; j <= n; j++) {
-                dp[i][j] = dp[i - 1][j];
-                if (j - s[i - 1] >= 0) {
-                    dp[i][j] = Math.min(Math.min(dp[i][j], dp[i - 1][j - s[i - 1]]), dp[i][j - s[i - 1]] + 1);
+        for (int i = 0; i < m; i++) {
+            for (int j = i + 1; j < m; j++) {
+                int sum = s[i] + s[j];
+                if (sum <= n) {
+                    dp[sum] = 1;
                 }
             }
         }
-        return dp[m][n] != MAX_VALUE ? dp[m][n] : -1;
+        for (int i = 2; i <= n; i++) {
+            for (int j = 1; j <= i / 2; j++) {
+                dp[i] = Math.min(dp[i], dp[i - j] + dp[j]);
+            }
+        }
+        return dp[n] == MAX_VALUE ? -1 : dp[n];
     }
 }
