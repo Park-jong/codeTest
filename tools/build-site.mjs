@@ -106,7 +106,7 @@ const KEYWORDS = new Set(['if', 'for', 'while', 'switch', 'catch', 'return', 'ne
 function analyzeStructure(code) {
   // 클래스
   const classes = [];
-  const classRe = /\b(class|record|enum|interface)\s+(\w+)[^{;]*\{/g;
+  const classRe = /\b(class|record|enum|interface)\s+([\p{L}\p{N}_$]+)[^{;]*\{/gu;
   let m;
   while ((m = classRe.exec(code))) {
     const open = m.index + m[0].length - 1;
