@@ -19,11 +19,6 @@
   --accent-ink: #1c5cab;
   --accent-wash: rgba(42,120,214,0.10);
   --accent-wash-2: rgba(42,120,214,0.20);
-  --heat-0: #ecebe6;
-  --heat-1: #b7d3f6;
-  --heat-2: #6da7ec;
-  --heat-3: #2a78d6;
-  --heat-4: #104281;
   --on-accent: #ffffff;
   --code-kw: #a3367a;
   --code-type: #1c5cab;
@@ -42,7 +37,6 @@
     --page: #0d0d0d; --surface: #1a1a19; --surface-2: #232321; --ink: #f0efec; --ink-2: #c3c2b7; --muted: #898781;
     --grid: #2c2c2a; --axis: #383835; --border: rgba(255,255,255,0.10);
     --accent: #3987e5; --accent-ink: #86b6ef; --accent-wash: rgba(57,135,229,0.14); --accent-wash-2: rgba(57,135,229,0.28);
-    --heat-0: #262624; --heat-1: #184f95; --heat-2: #256abf; --heat-3: #3987e5; --heat-4: #86b6ef;
     --code-kw: #e48bc4; --code-type: #86b6ef; --code-str: #9ccf7c; --code-num: #f0b26b; --code-com: #7d7c76; --code-fn: #c2a5f2;
     --shadow: none; color-scheme: dark;
   }
@@ -51,7 +45,6 @@
   --page: #0d0d0d; --surface: #1a1a19; --surface-2: #232321; --ink: #f0efec; --ink-2: #c3c2b7; --muted: #898781;
   --grid: #2c2c2a; --axis: #383835; --border: rgba(255,255,255,0.10);
   --accent: #3987e5; --accent-ink: #86b6ef; --accent-wash: rgba(57,135,229,0.14); --accent-wash-2: rgba(57,135,229,0.28);
-  --heat-0: #262624; --heat-1: #184f95; --heat-2: #256abf; --heat-3: #3987e5; --heat-4: #86b6ef;
   --code-kw: #e48bc4; --code-type: #86b6ef; --code-str: #9ccf7c; --code-num: #f0b26b; --code-com: #7d7c76; --code-fn: #c2a5f2;
   --shadow: none; color-scheme: dark;
 }
@@ -108,37 +101,15 @@ h2 { font-size: 15px; margin: 0; font-weight: 650; letter-spacing: -0.005em; }
 .page-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; margin-bottom: 20px; flex-wrap: wrap; }
 
 /* KPI */
-.kpis { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .kpi { padding: 16px 18px; }
 .kpi .label { color: var(--ink-2); font-size: 13px; }
 .kpi .value { font-size: 30px; font-weight: 700; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; line-height: 1.2; margin-top: 4px; }
 .kpi .value small { font-size: 15px; font-weight: 500; color: var(--ink-2); margin-left: 2px; }
 .kpi .foot { color: var(--muted); font-size: 13px; margin-top: 2px; }
-@media (max-width: 900px) { .kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 
 .two { grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); }
 @media (max-width: 900px) { .two { grid-template-columns: minmax(0, 1fr); } }
-
-/* 히트맵 */
-.heat-scroll { overflow-x: auto; padding-bottom: 4px; }
-.heat { display: grid; grid-auto-flow: column; grid-template-rows: 16px repeat(7, 12px); gap: 3px; width: max-content; }
-.heat .cell { width: 12px; height: 12px; border-radius: 3px; background: var(--heat-0); cursor: default; }
-.heat .cell[data-n] { cursor: pointer; }
-.heat .cell:hover { outline: 2px solid var(--ink); outline-offset: 1px; }
-.heat .mlabel { font-size: 11px; color: var(--muted); white-space: nowrap; height: 16px; line-height: 12px; }
-.heat .pad { width: 12px; height: 12px; }
-.heat-wrap { display: flex; gap: 6px; }
-.heat-days { display: grid; grid-template-rows: 16px repeat(7, 12px); gap: 3px; font-size: 10px; color: var(--muted); line-height: 12px; }
-.legend { display: flex; align-items: center; gap: 4px; font-size: 12px; color: var(--muted); }
-.legend i { width: 12px; height: 12px; border-radius: 3px; display: inline-block; }
-
-/* 막대 */
-.bars-svg { width: 100%; display: block; }
-.bars-svg text { font: 11px var(--sans); fill: var(--muted); }
-.bars-svg .gl { stroke: var(--grid); stroke-width: 1; }
-.bars-svg .base { stroke: var(--axis); stroke-width: 1; }
-.bars-svg .bar { fill: var(--accent); }
-.bars-svg .hit:hover + .bar, .bars-svg .bar.on { fill: var(--accent-ink); }
 
 .tech-bars { display: flex; flex-direction: column; gap: 2px; }
 .tech-row { display: grid; grid-template-columns: 128px minmax(0, 1fr) 34px; align-items: center; gap: 10px; padding: 4px 6px; border-radius: 7px; cursor: pointer; border: 0; background: none; text-align: left; width: 100%; }
@@ -259,11 +230,6 @@ pre.code { margin: 0; padding: 8px 0 16px; font: 12.8px/1.65 var(--mono); tab-si
 .pager .dir { font-size: 12px; color: var(--muted); }
 .pager .nm { font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-.recent { display: flex; flex-direction: column; }
-.recent a { display: grid; grid-template-columns: 74px minmax(0, 1fr) auto; gap: 10px; align-items: center; padding: 8px 6px; border-radius: 8px; text-decoration: none; }
-.recent a:hover { background: var(--surface-2); }
-.recent .d { font-size: 12.5px; color: var(--muted); font-variant-numeric: tabular-nums; }
-.recent .t { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-weight: 550; font-size: 14px; }
 
 #tip { position: fixed; z-index: 50; pointer-events: none; background: var(--ink); color: var(--page); font-size: 12.5px; padding: 7px 10px; border-radius: 8px; max-width: 280px; opacity: 0; transition: opacity .08s; line-height: 1.45; }
 #tip b { font-weight: 650; }
@@ -352,7 +318,7 @@ function hideTip() { tip.style.opacity = 0; }
 })();
 
 // ───────── 상태 & 라우팅 ─────────
-const state = { q: '', plat: 'all', techs: new Set(), sort: 'new', day: null };
+const state = { q: '', plat: 'all', techs: new Set(), sort: 'new' };
 const app = $('#app');
 const gsearch = $('#gsearch');
 gsearch.addEventListener('input', () => {
@@ -375,51 +341,24 @@ function route() {
   window.scrollTo(0, 0);
 }
 addEventListener('hashchange', route);
-let rsT; addEventListener('resize', () => { clearTimeout(rsT); rsT = setTimeout(() => { const el = document.getElementById('monthly'); if (el) monthlyChart(el); }, 120); });
 
 // ───────── 대시보드 ─────────
 function renderHome() {
   const boj = P.filter(p => p.platform === 'boj').length;
-  const days = [...new Set(P.map(p => p.first).filter(Boolean))].sort();
   const totalLoc = P.reduce((s, p) => s + p.loc, 0);
-  // 최장 연속
-  let best = 0, run = 0, prev = null;
-  for (const d of days) {
-    const t = Date.parse(d + 'T00:00:00Z');
-    run = prev != null && t - prev === 86400000 ? run + 1 : 1;
-    best = Math.max(best, run); prev = t;
-  }
-  const recent = [...sortedByDate].reverse().slice(0, 8);
 
   app.innerHTML = `
     <div class="page-head">
       <div><h1>코딩테스트 풀이 지도</h1>
-      <p class="sub">풀이 파일 ${P.length}개를 분석해 언제·무엇을·어떻게 풀었는지 정리했습니다.</p></div>
+      <p class="sub">풀이 파일 ${P.length}개를 분석해 무엇을·어떻게 풀었는지 정리했습니다.</p></div>
       <span class="muted" style="font-size:13px">분석일 ${fmtDate(D.generatedAt)}</span>
     </div>
     <div class="grid kpis" style="margin-bottom:16px">
       <div class="card kpi"><div class="label">푼 문제</div><div class="value">${P.length}<small>개</small></div><div class="foot">백준 ${boj} · 프로그래머스 ${P.length - boj}</div></div>
       <div class="card kpi"><div class="label">작성한 코드</div><div class="value">${totalLoc.toLocaleString()}<small>줄</small></div><div class="foot">문제당 평균 ${Math.round(totalLoc / P.length)}줄</div></div>
-      <div class="card kpi"><div class="label">풀이한 날</div><div class="value">${days.length}<small>일</small></div><div class="foot">${fmtDate(days[0])} ~ ${fmtDate(days[days.length - 1])}</div></div>
-      <div class="card kpi"><div class="label">최장 연속 풀이</div><div class="value">${best}<small>일</small></div><div class="foot">하루도 빠짐없이 커밋한 기간</div></div>
-    </div>
-    <div class="card" style="margin-bottom:16px">
-      <div class="card-h"><h2>언제 풀었나</h2>
-        <div class="legend">적음 <i style="background:var(--heat-0)"></i><i style="background:var(--heat-1)"></i><i style="background:var(--heat-2)"></i><i style="background:var(--heat-3)"></i><i style="background:var(--heat-4)"></i> 많음</div>
-      </div>
-      <div class="card-b"><div class="heat-scroll" id="heatScroll">${heatmap()}</div>
-      <p class="muted" style="font-size:12.5px;margin:8px 0 0">칸 하나가 하루입니다. 파일이 처음 커밋된 날을 기준으로 셉니다. 칸을 누르면 그날 푼 문제를 봅니다.</p></div>
-    </div>
-    <div class="grid two" style="margin-bottom:16px">
-      <div class="card"><div class="card-h"><h2>월별 풀이 수</h2><span class="hint">막대에 올리면 숫자</span></div><div class="card-b" id="monthly"></div></div>
-      <div class="card"><div class="card-h"><h2>자주 쓴 기법</h2><span class="hint">누르면 해당 문제만</span></div><div class="card-b"><div class="tech-bars">${techBars()}</div></div></div>
     </div>
     <div class="grid two">
-      <div class="card"><div class="card-h"><h2>최근 푼 문제</h2><a class="ext" href="#/list">전체 보기</a></div>
-        <div class="card-b"><div class="recent">${recent.map(p => `
-          <a href="${href(p)}"><span class="d">${fmtDate(p.first).slice(2)}</span><span class="t">${esc(label(p))}</span>
-          <span class="chips">${p.techs.slice(0, 2).map(t => `<span class="chip${p.explicit.includes(t) ? ' tagged' : ''}">${esc(tname(t))}</span>`).join('')}</span></a>`).join('')}
-        </div></div></div>
+      <div class="card"><div class="card-h"><h2>자주 쓴 기법</h2><span class="hint">누르면 해당 문제만</span></div><div class="card-b"><div class="tech-bars">${techBars()}</div></div></div>
       <div class="card"><div class="card-h"><h2>읽는 법</h2></div>
         <div class="card-b" style="font-size:14px;color:var(--ink-2)">
           <p style="margin:0 0 10px"><span class="chip tagged">DP</span> 처럼 채워진 칩은 <b style="color:var(--ink)">파일명·커밋 메시지에 직접 붙인 태그</b>, <span class="chip">BFS</span> 처럼 테두리만 있는 칩은 <b style="color:var(--ink)">코드에서 자동 감지</b>한 기법입니다.</p>
@@ -428,92 +367,12 @@ function renderHome() {
         </div></div>
     </div>`;
 
-  monthlyChart($('#monthly'));
-  const hs = $('#heatScroll'); hs.scrollLeft = hs.scrollWidth;
-  app.querySelectorAll('.heat .cell[data-d]').forEach(c => {
-    c.addEventListener('mousemove', ev => {
-      const d = c.dataset.d, list = P.filter(p => p.first === d);
-      showTip(`<b>${fmtDate(d)}</b> · ${list.length ? list.length + '문제' : '풀이 없음'}${list.slice(0, 6).map(p => '<br>' + esc(label(p))).join('')}${list.length > 6 ? '<br>…' : ''}`, ev);
-    });
-    c.addEventListener('mouseleave', hideTip);
-    if (c.dataset.n) c.addEventListener('click', () => { resetFilters(); state.day = c.dataset.d; location.hash = '#/list'; });
-  });
   app.querySelectorAll('.tech-row').forEach(b => b.addEventListener('click', () => {
     resetFilters(); state.techs.add(b.dataset.t); location.hash = '#/list';
   }));
 }
 
-function resetFilters() { state.q = ''; gsearch.value = ''; state.plat = 'all'; state.techs.clear(); state.day = null; }
-
-function heatmap() {
-  const counts = {};
-  for (const p of P) if (p.first) counts[p.first] = (counts[p.first] || 0) + 1;
-  const ds = Object.keys(counts).sort();
-  if (!ds.length) return '';
-  const day = 86400000;
-  const start = new Date(ds[0] + 'T00:00:00Z');
-  start.setUTCDate(start.getUTCDate() - start.getUTCDay()); // 일요일부터
-  const endT = Date.parse(ds[ds.length - 1] + 'T00:00:00Z');
-  let html = '<div class="heat-wrap"><div class="heat-days"><span></span><span></span><span>월</span><span></span><span>수</span><span></span><span>금</span><span></span></div><div class="heat">';
-  let lastMonth = -1;
-  for (let w = start.getTime(); w <= endT; w += 7 * day) {
-    const wd = new Date(w);
-    // 그 주에 1일이 들어 있으면 월 라벨
-    let lab = '';
-    for (let i = 0; i < 7; i++) {
-      const dd = new Date(w + i * day);
-      if (dd.getUTCMonth() !== lastMonth && (dd.getUTCDate() <= 7)) { lab = (dd.getUTCMonth() === 0 || lastMonth === -1 ? String(dd.getUTCFullYear()).slice(2) + '.' : '') + (dd.getUTCMonth() + 1) + '월'; lastMonth = dd.getUTCMonth(); break; }
-    }
-    html += `<div class="mlabel">${lab}</div>`;
-    for (let i = 0; i < 7; i++) {
-      const t = w + i * day;
-      const iso = new Date(t).toISOString().slice(0, 10);
-      if (t > endT) { html += '<div class="pad"></div>'; continue; }
-      const n = counts[iso] || 0;
-      const lv = n === 0 ? 0 : n === 1 ? 1 : n === 2 ? 2 : n <= 4 ? 3 : 4;
-      html += `<div class="cell" data-d="${iso}"${n ? ` data-n="${n}"` : ''} style="background:var(--heat-${lv})" aria-label="${iso} ${n}문제"></div>`;
-    }
-    void wd;
-  }
-  return html + '</div></div>';
-}
-
-function monthlyChart(el) {
-  const counts = {};
-  for (const p of P) if (p.first) { const m = p.first.slice(0, 7); counts[m] = (counts[m] || 0) + 1; }
-  const keys = Object.keys(counts).sort();
-  if (!keys.length) return;
-  // 빈 달도 채운다
-  const months = [];
-  let [y, m] = keys[0].split('-').map(Number);
-  const [ey, em] = keys[keys.length - 1].split('-').map(Number);
-  while (y < ey || (y === ey && m <= em)) { months.push(`${y}-${String(m).padStart(2, '0')}`); m++; if (m > 12) { m = 1; y++; } }
-  const W = Math.max(280, el.clientWidth), H = 300, L = 30, R = 6, T = 10, B = 26;
-  const max = Math.max(...months.map(k => counts[k] || 0));
-  const step = max > 40 ? 20 : max > 20 ? 10 : 5;
-  const top = Math.ceil(max / step) * step;
-  const bw = (W - L - R) / months.length;
-  const y0 = H - B, ys = v => y0 - (v / top) * (H - T - B);
-  let s = `<svg class="bars-svg" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="img" aria-label="월별 풀이 수 막대 차트">`;
-  for (let v = 0; v <= top; v += step) s += `<line class="${v ? 'gl' : 'base'}" x1="${L}" x2="${W - R}" y1="${ys(v)}" y2="${ys(v)}"/><text x="${L - 6}" y="${ys(v) + 4}" text-anchor="end">${v}</text>`;
-  months.forEach((k, i) => {
-    const v = counts[k] || 0, x = L + i * bw, w = Math.max(2, bw - 2), h = y0 - ys(v);
-    const r = Math.min(4, w / 2, h);
-    const path = v ? `M${x + 1},${y0} V${y0 - h + r} Q${x + 1},${y0 - h} ${x + 1 + r},${y0 - h} H${x + 1 + w - r} Q${x + 1 + w},${y0 - h} ${x + 1 + w},${y0 - h + r} V${y0} Z` : '';
-    s += `<rect class="hit" data-k="${k}" data-v="${v}" x="${x}" y="${T}" width="${bw}" height="${y0 - T}" fill="transparent"/>`;
-    s += v ? `<path class="bar" d="${path}"/>` : '<g class="bar"></g>';
-    const mm = Number(k.slice(5));
-    const every = bw >= 34 ? 1 : bw >= 16 ? 2 : 3;
-    if (mm === 1 || i === 0 || (mm - 1) % every === 0) {
-      s += `<text x="${x + bw / 2}" y="${H - 8}" text-anchor="middle">${mm === 1 || i === 0 ? k.slice(2, 4) + '.' : ''}${mm}</text>`;
-    }
-  });
-  el.innerHTML = s + '</svg>';
-  el.querySelectorAll('.hit').forEach(r => {
-    r.addEventListener('mousemove', ev => { const [yy, mo] = r.dataset.k.split('-'); showTip(`<b>${yy}년 ${Number(mo)}월</b><br>${r.dataset.v}문제`, ev); });
-    r.addEventListener('mouseleave', hideTip);
-  });
-}
+function resetFilters() { state.q = ''; gsearch.value = ''; state.plat = 'all'; state.techs.clear(); }
 
 function techBars() {
   const max = Math.max(...techOrder.map(t => techCount[t]));
@@ -530,7 +389,6 @@ function filtered() {
   const q = state.q.trim().toLowerCase();
   let list = P.filter(p => {
     if (state.plat !== 'all' && p.platform !== state.plat) return false;
-    if (state.day && p.first !== state.day) return false;
     for (const t of state.techs) if (!p.techs.includes(t)) return false;
     if (q) {
       const hay = [p.title, p.num ?? '', p.id, p.commitMsg, ...p.techs.map(tname), ...p.extraTags].join(' ').toLowerCase();
@@ -578,9 +436,8 @@ function renderList(onlyResults) {
   document.querySelectorAll('#plat button').forEach(b => b.setAttribute('aria-pressed', b.dataset.v === state.plat));
   document.querySelectorAll('#tf .tf').forEach(b => b.setAttribute('aria-pressed', state.techs.has(b.dataset.t)));
   const list = filtered();
-  const active = state.techs.size || state.plat !== 'all' || state.q || state.day;
+  const active = state.techs.size || state.plat !== 'all' || state.q;
   $('#rmeta').innerHTML = `<span><b style="color:var(--ink)">${list.length}</b>개 문제</span>
-    ${state.day ? `<span class="chip tagged">${fmtDate(state.day)}에 푼 문제</span>` : ''}
     ${active ? '<button class="linkish" id="clear">필터 초기화</button>' : ''}`;
   $('#clear')?.addEventListener('click', () => { resetFilters(); renderList(); });
   $('#results').innerHTML = list.length ? `<div class="cards">${list.map(card).join('')}</div>` : '<div class="card empty">조건에 맞는 문제가 없습니다.</div>';
