@@ -11,6 +11,7 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const SRC = join(ROOT, 'untitled', 'src');
 const OUT_DIR = join(ROOT, 'site');
 const TEMPLATE = join(ROOT, 'tools', 'site-template.html');
+const ANIM = join(ROOT, 'tools', 'site-anim.js'); // 기법별 동작 애니메이션
 
 // ───────────────────────── 기법(태그) 정의 ─────────────────────────
 // id → 표시 이름, 묶음(group)
@@ -440,7 +441,8 @@ for (const file of files) {
 const data = { generatedAt: new Date().toISOString().slice(0, 10), tech: TECH, problems };
 const BS = String.fromCharCode(92); // 백슬래시
 const json = JSON.stringify(data).replace(new RegExp("[<" + String.fromCharCode(0x2028, 0x2029) + "]", "g"), c => BS + "u" + c.charCodeAt(0).toString(16).padStart(4, "0"));
-const html = readFileSync(TEMPLATE, 'utf8').replace('/*__DATA__*/null', () => json);
+const html = readFileSync(TEMPLATE, 'utf8').replace('/*__DATA__*/null', () => json)
+  .replace('/*__ANIM__*/', () => readFileSync(ANIM, 'utf8'));
 mkdirSync(OUT_DIR, { recursive: true });
 writeFileSync(join(OUT_DIR, 'index.html'), html);
 

@@ -26,6 +26,7 @@
   --code-num: #a25a00;
   --code-com: #898781;
   --code-fn: #6a3fb5;
+  --wall: #4a4946; --hi: #e3a33b; --on-hi: #1f1400; --hi-wash: rgba(227,163,59,0.20); --bad: #d24b4b; --bad-wash: rgba(210,75,75,0.13);
   --shadow: 0 1px 2px rgba(0,0,0,0.04), 0 4px 16px rgba(0,0,0,0.04);
   --radius: 12px;
   --mono: "JetBrains Mono", "D2Coding", Consolas, "SF Mono", Menlo, monospace;
@@ -38,6 +39,7 @@
     --grid: #2c2c2a; --axis: #383835; --border: rgba(255,255,255,0.10);
     --accent: #3987e5; --accent-ink: #86b6ef; --accent-wash: rgba(57,135,229,0.14); --accent-wash-2: rgba(57,135,229,0.28);
     --code-kw: #e48bc4; --code-type: #86b6ef; --code-str: #9ccf7c; --code-num: #f0b26b; --code-com: #7d7c76; --code-fn: #c2a5f2;
+    --wall: #5b5a56; --hi: #e0a445; --on-hi: #1f1400; --hi-wash: rgba(224,164,69,0.22); --bad: #e46a6a; --bad-wash: rgba(228,106,106,0.18);
     --shadow: none; color-scheme: dark;
   }
 }
@@ -46,6 +48,7 @@
   --grid: #2c2c2a; --axis: #383835; --border: rgba(255,255,255,0.10);
   --accent: #3987e5; --accent-ink: #86b6ef; --accent-wash: rgba(57,135,229,0.14); --accent-wash-2: rgba(57,135,229,0.28);
   --code-kw: #e48bc4; --code-type: #86b6ef; --code-str: #9ccf7c; --code-num: #f0b26b; --code-com: #7d7c76; --code-fn: #c2a5f2;
+  --wall: #5b5a56; --hi: #e0a445; --on-hi: #1f1400; --hi-wash: rgba(224,164,69,0.22); --bad: #e46a6a; --bad-wash: rgba(228,106,106,0.18);
   --shadow: none; color-scheme: dark;
 }
 
@@ -230,6 +233,156 @@ pre.code { margin: 0; padding: 8px 0 16px; font: 12.8px/1.65 var(--mono); tab-si
 .pager .dir { font-size: 12px; color: var(--muted); }
 .pager .nm { font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
+/* 대시보드: 오늘의 복습 */
+.side-stack { display: flex; flex-direction: column; gap: 16px; min-width: 0; }
+.review .q { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.review .q-title { font-size: 19px; font-weight: 700; letter-spacing: -0.015em; line-height: 1.35; margin: 8px 0 4px; }
+.review .q-meta { color: var(--muted); font-size: 13px; font-variant-numeric: tabular-nums; }
+.review .ask { margin-top: 14px; padding: 12px; border-radius: 9px; background: var(--surface-2); }
+.review .ask p { margin: 0 0 8px; font-size: 13.5px; color: var(--ink-2); }
+.review .actions { display: flex; gap: 8px; margin-top: 14px; flex-wrap: wrap; }
+.btn { display: inline-flex; align-items: center; gap: 6px; height: 34px; padding: 0 14px; border-radius: 9px; border: 1px solid var(--border); background: var(--surface); cursor: pointer; font-size: 13.5px; text-decoration: none; color: var(--ink); white-space: nowrap; }
+.btn:hover { border-color: var(--axis); }
+.btn.primary { background: var(--accent); border-color: var(--accent); color: var(--on-accent); font-weight: 550; }
+.btn.primary:hover { filter: brightness(1.06); }
+.btn.sm { height: 30px; padding: 0 11px; font-size: 13px; }
+
+/* 대시보드: 기법별 대표 풀이 */
+.rep-pills { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+.card-h { flex-wrap: wrap; row-gap: 2px; }
+.card-h h2 { white-space: nowrap; }
+@media (max-width: 640px) {
+  .rep-pills { flex-wrap: nowrap; overflow-x: auto; margin: 0 -18px 14px; padding: 0 18px 4px; scrollbar-width: thin; }
+  .rep-pills .tf { flex: none; }
+}
+.rep-view { display: grid; grid-template-columns: 260px minmax(0, 1fr); gap: 16px; align-items: start; }
+@media (max-width: 760px) { .rep-view { grid-template-columns: minmax(0, 1fr); } }
+.rep-info .nm { font-size: 17px; font-weight: 700; letter-spacing: -0.01em; margin: 0 0 2px; }
+.rep-info .desc { font-size: 13.5px; color: var(--ink-2); margin: 0 0 14px; }
+.rep-info .prob { padding: 12px; border-radius: 9px; background: var(--surface-2); }
+.rep-info .prob .t { font-weight: 650; line-height: 1.35; margin: 6px 0 4px; }
+.rep-info .prob .m { color: var(--muted); font-size: 12.5px; font-variant-numeric: tabular-nums; }
+.rep-info .acts { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 12px; }
+.rep-info .why { font-size: 12px; color: var(--muted); margin-top: 10px; }
+.snip { border: 1px solid var(--border); border-radius: 10px; overflow: hidden; background: var(--surface); }
+.snip-bar { display: flex; gap: 10px; align-items: center; padding: 8px 12px; border-bottom: 1px solid var(--border); font: 12px var(--mono); color: var(--ink-2); }
+.snip-bar .sel { margin-left: auto; font-family: var(--sans); color: var(--accent-ink); white-space: nowrap; }
+.snip-scroll { overflow-x: auto; }
+.snip pre.code { padding: 8px 0; }
+.snip .cl .no { width: 44px; }
+.cl.gap .tx { color: var(--muted); }
+a.tf { text-decoration: none; }
+
+/* 동작 원리 (애니메이션) */
+.anim-desc { margin: 0 0 14px; color: var(--ink-2); font-size: 14px; max-width: 900px; }
+.anim { display: grid; grid-template-columns: minmax(0, 1fr) 380px; gap: 16px; align-items: start; }
+@media (max-width: 960px) { .anim { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 640px) { .stage { padding: 6px; min-height: 0; } }
+.stage { background: var(--surface-2); border-radius: 10px; padding: 14px; display: flex; justify-content: center; align-items: center; min-height: 240px; }
+.anim-svg { width: 100%; height: auto; display: block; max-height: 460px; }
+.alegend { display: flex; flex-wrap: wrap; gap: 6px 14px; margin-top: 10px; font-size: 12.5px; color: var(--ink-2); }
+.alegend span { display: inline-flex; align-items: center; gap: 6px; }
+.sw { width: 14px; height: 14px; border-radius: 4px; display: inline-block; background: var(--surface); border: 1px solid var(--border); flex: none; }
+.sw[data-k="cur"], .sw[data-k="done"], .sw[data-k="tree"] { background: var(--accent); border-color: var(--accent); }
+.sw[data-k="vis"], .sw[data-k="win"] { background: var(--accent-wash-2); border-color: transparent; }
+.sw[data-k="front"] { background: var(--accent-wash); border: 2px solid var(--accent); }
+.sw[data-k="fresh"] { background: var(--accent-wash); border: 2px solid var(--hi); }
+.sw[data-k="path"], .sw[data-k="try"] { background: var(--hi); border-color: var(--hi); }
+.sw[data-k="curn"] { background: var(--surface); border: 3px solid var(--hi); border-radius: 50%; }
+.sw[data-k="root"] { border: 2.5px solid var(--ink); border-radius: 50%; }
+.sw[data-k="dep"] { background: var(--hi-wash); border: 2px solid var(--hi); }
+.sw[data-k="wall"] { background: var(--wall); border-color: var(--wall); }
+.sw[data-k="dead"] { background: var(--grid); border-color: transparent; }
+.sw[data-k="gone"] { opacity: 0.4; }
+.sw[data-k="trysq"] { border: 3px solid var(--accent); background: var(--surface); }
+.sw[data-k="skip"] { border: 1.5px dashed var(--axis); background: transparent; }
+.sw[data-k="bad"] { background: var(--bad); border-color: var(--bad); }
+.sw[data-k="att"] { background: var(--bad-wash); border-color: transparent; }
+.pcode { font: 12.5px/1.75 var(--mono); background: var(--surface-2); border-radius: 10px; padding: 8px 0; overflow-x: auto; }
+.pcode .pl { padding: 0 12px; white-space: pre; border-left: 3px solid transparent; color: var(--ink-2); width: max-content; min-width: 100%; }
+.pcode .pl.on { background: var(--accent-wash-2); border-left-color: var(--accent); color: var(--ink); }
+.avars { margin: 12px 0 0; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 6px 12px; font-size: 13px; }
+.avars dt { color: var(--muted); white-space: nowrap; }
+.avars dd { margin: 0; font: 12.5px/1.55 var(--mono); color: var(--ink); overflow-wrap: anywhere; }
+.amsg { margin-top: 14px; padding: 11px 14px; border-radius: 10px; background: var(--accent-wash); font-size: 14.5px; line-height: 1.5; min-height: 46px; }
+.player { display: flex; align-items: center; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
+.player .ib { width: 34px; padding: 0; justify-content: center; }
+.player input[type="range"] { flex: 1 1 160px; min-width: 120px; accent-color: var(--accent); }
+.player .pos { font-variant-numeric: tabular-nums; color: var(--ink-2); font-size: 13px; min-width: 64px; text-align: right; }
+.player select { height: 34px; border-radius: 9px; border: 1px solid var(--border); background: var(--surface); color: var(--ink); padding: 0 8px; font: inherit; font-size: 13.5px; }
+.mine { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 8px; }
+.mine-item { display: flex; align-items: center; gap: 8px; padding: 9px 12px; border: 1px solid var(--border); border-radius: 9px; text-decoration: none; min-width: 0; }
+.mine-item:hover { border-color: var(--accent); }
+.mine-item .t { font-weight: 600; font-size: 14px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1; min-width: 0; }
+.mine-item .m { color: var(--muted); font-size: 12.5px; font-variant-numeric: tabular-nums; }
+.anim-links { display: flex; flex-wrap: wrap; gap: 6px 12px; align-items: center; margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--border); font-size: 13px; }
+.anim-links span { color: var(--muted); }
+.anim-links a { color: var(--accent-ink); text-decoration: none; font-weight: 550; }
+.anim-links a:hover { text-decoration: underline; }
+/* 애니메이션 SVG */
+.anim-svg text { font: 600 15px var(--sans); fill: var(--ink); }
+.anim-svg .cn { font: 500 10.5px var(--sans); fill: var(--muted); }
+.anim-svg .cap { font: 600 13px var(--sans); fill: var(--ink-2); }
+.anim-svg .mk { font: 600 11.5px var(--sans); fill: var(--ink-2); }
+.anim-svg .mk.strong { fill: var(--accent-ink); }
+.ac rect { fill: var(--surface); stroke: var(--border); stroke-width: 1; }
+.ac.wall rect { fill: var(--wall); stroke: var(--wall); }
+.ac.vis rect, .ac.win rect { fill: var(--accent-wash-2); stroke: transparent; }
+.ac.win rect { stroke: var(--accent); stroke-width: 1.5; }
+.ac.front rect { fill: var(--accent-wash); stroke: var(--accent); stroke-width: 2; }
+.ac.fresh rect { fill: var(--accent-wash); stroke: var(--hi); stroke-width: 3; }
+.ac.cur rect { fill: var(--accent); stroke: var(--accent); }
+.ac.cur text { fill: var(--on-accent); }
+.ac.cur .cn { fill: var(--on-accent); opacity: 0.85; }
+.ac.path rect { fill: var(--hi); stroke: var(--hi); }
+.ac.path text { fill: var(--on-hi); }
+.ac.path .cn { fill: var(--on-hi); opacity: 0.7; }
+.ac.pathsoft rect { fill: var(--hi-wash); stroke: transparent; }
+.ac.dead rect { fill: var(--grid); stroke: transparent; }
+.ac.dead text { fill: var(--muted); }
+.ac.dep rect { fill: var(--hi-wash); stroke: var(--hi); stroke-width: 2; }
+.ac.gone { opacity: 0.3; }
+.ac.raw text { fill: var(--muted); font-weight: 500; }
+.ac.sq rect { stroke: transparent; }
+.ac.sq.dark rect { fill: var(--grid); }
+.ac.att rect { fill: var(--bad-wash); }
+.ac.rowfail rect { fill: var(--bad-wash); stroke: var(--bad); stroke-width: 1; }
+.ac.try rect { stroke: var(--accent); stroke-width: 3; }
+.ac.trybad rect { stroke: var(--bad); stroke-width: 3; }
+.ac.tryundo rect { stroke: var(--muted); stroke-width: 2; stroke-dasharray: 4 3; }
+.queen circle { fill: var(--accent); }
+.queen text { fill: var(--on-accent) !important; font-weight: 700; }
+.queen.bad circle { fill: var(--bad); }
+.queen.win circle { fill: var(--hi); }
+.queen.win text { fill: var(--on-hi) !important; }
+.anim-svg .xmark { fill: var(--bad); font-size: 22px; font-weight: 700; }
+.rng path { fill: none; stroke: var(--hi); stroke-width: 2.5; }
+.anim-svg .rng text { font: 600 11.5px var(--sans); fill: var(--ink-2); }
+.ae line { stroke: var(--axis); stroke-width: 2; }
+.ae.tree line { stroke: var(--accent); stroke-width: 4.5; }
+.ae.try line { stroke: var(--hi); stroke-width: 4.5; }
+.ae.skip line { stroke-dasharray: 5 5; }
+.ae.skip { opacity: 0.45; }
+.ae.gone { opacity: 0.2; }
+.ae .wbg { fill: var(--surface-2); }
+.anim-svg .ae .w { font: 600 12.5px var(--sans); fill: var(--ink-2); }
+.anim-svg .ae.tree .w { fill: var(--accent-ink); }
+.anim-svg .ae.try .w { fill: var(--ink); }
+.arrowhead { fill: var(--axis); }
+.an circle { fill: var(--surface); stroke: var(--axis); stroke-width: 2; }
+.an.front circle { fill: var(--accent-wash); stroke: var(--accent); stroke-width: 2.5; }
+.an.done circle { fill: var(--accent); stroke: var(--accent); }
+.anim-svg .an.done > text { fill: var(--on-accent); }
+.an.cur circle { fill: var(--accent); stroke: var(--accent); }
+.anim-svg .an.cur > text { fill: var(--on-accent); }
+.an.cmp circle { fill: var(--hi-wash); stroke: var(--hi); stroke-width: 2.5; }
+.an.curn circle { stroke: var(--hi); stroke-width: 4; }
+.an.root circle { stroke: var(--ink); stroke-width: 2.5; }
+.badge rect { fill: var(--surface); stroke: var(--border); }
+.anim-svg .badge text { font: 600 12px var(--mono); fill: var(--ink-2); }
+.badge.done rect { fill: var(--accent-wash-2); stroke: transparent; }
+.anim-svg .badge.done text { fill: var(--accent-ink); }
+
 
 #tip { position: fixed; z-index: 50; pointer-events: none; background: var(--ink); color: var(--page); font-size: 12.5px; padding: 7px 10px; border-radius: 8px; max-width: 280px; opacity: 0; transition: opacity .08s; line-height: 1.45; }
 #tip b { font-weight: 650; }
@@ -246,6 +399,7 @@ pre.code { margin: 0; padding: 8px 0 16px; font: 12.8px/1.65 var(--mono); tab-si
     <nav class="tabs">
       <a href="#/" data-nav="home">대시보드</a>
       <a href="#/list" data-nav="list">문제 목록</a>
+      <a href="#/algo" data-nav="algo">동작 원리</a>
     </nav>
     <label class="top-search">
       <span class="vh">문제 검색</span>
@@ -260,6 +414,7 @@ pre.code { margin: 0; padding: 8px 0 16px; font: 12.8px/1.65 var(--mono); tab-si
 <main><div class="wrap" id="app"></div></main>
 <div id="tip" role="tooltip"></div>
 
+<script>/*__ANIM__*/</script>
 <script>
 const D = /*__DATA__*/null;
 const TECH = D.tech;
@@ -328,13 +483,15 @@ gsearch.addEventListener('input', () => {
 });
 
 function route() {
-  hideTip();
+  hideTip(); stopAnim();
   const h = decodeURIComponent(location.hash.slice(1) || '/');
   document.querySelectorAll('[data-nav]').forEach(a => a.removeAttribute('aria-current'));
   if (h.startsWith('/p/')) {
-    const p = byId.get(h.slice(3));
-    if (p) { renderDetail(p); window.scrollTo(0, 0); return; }
+    const [id, pre] = h.slice(3).split('?t=');
+    const p = byId.get(id);
+    if (p) { window.scrollTo(0, 0); renderDetail(p, pre); return; }
   }
+  if (h.startsWith('/algo')) { $('[data-nav=algo]').setAttribute('aria-current', 'page'); renderAlgo(h.slice(6)); window.scrollTo(0, 0); return; }
   if (h.startsWith('/list')) { $('[data-nav=list]').setAttribute('aria-current', 'page'); renderList(); return; }
   $('[data-nav=home]').setAttribute('aria-current', 'page');
   renderHome();
@@ -357,19 +514,170 @@ function renderHome() {
       <div class="card kpi"><div class="label">푼 문제</div><div class="value">${P.length}<small>개</small></div><div class="foot">백준 ${boj} · 프로그래머스 ${P.length - boj}</div></div>
       <div class="card kpi"><div class="label">작성한 코드</div><div class="value">${totalLoc.toLocaleString()}<small>줄</small></div><div class="foot">문제당 평균 ${Math.round(totalLoc / P.length)}줄</div></div>
     </div>
-    <div class="grid two">
+    <div class="grid two" style="margin-bottom:16px">
       <div class="card"><div class="card-h"><h2>자주 쓴 기법</h2><span class="hint">누르면 해당 문제만</span></div><div class="card-b"><div class="tech-bars">${techBars()}</div></div></div>
+      <div class="side-stack">
+      <div class="card review" id="review"></div>
       <div class="card"><div class="card-h"><h2>읽는 법</h2></div>
         <div class="card-b" style="font-size:14px;color:var(--ink-2)">
           <p style="margin:0 0 10px"><span class="chip tagged">DP</span> 처럼 채워진 칩은 <b style="color:var(--ink)">파일명·커밋 메시지에 직접 붙인 태그</b>, <span class="chip">BFS</span> 처럼 테두리만 있는 칩은 <b style="color:var(--ink)">코드에서 자동 감지</b>한 기법입니다.</p>
           <p style="margin:0 0 10px">자동 감지는 <code>PriorityQueue</code>, <code>mid = (l + r) / 2</code>, <code>dp[</code> 같은 코드 패턴을 찾는 방식이라 틀릴 수 있어요. 상세 화면에서 근거가 된 줄을 직접 확인할 수 있습니다.</p>
           <p style="margin:0">상세 화면의 <b style="color:var(--ink)">호출 구조도</b>는 메서드가 어떤 순서로 서로를 부르는지 보여 줍니다. 노드를 누르면 해당 메서드 코드로 이동합니다.</p>
         </div></div>
+      </div>
+    </div>
+    <div class="card" id="rep">
+      <div class="card-h"><h2>기법별 대표 풀이</h2><span class="hint">기법마다 직접 짠 풀이 중 짧고 그 기법이 잘 드러나는 것</span></div>
+      <div class="card-b">
+        <div class="rep-pills" id="repPills">${techOrder.map(t => `<button class="tf" data-t="${t}" title="${esc(TECH_DESC[t] || '')}">${esc(tname(t))}<span class="n">${techCount[t]}</span></button>`).join('')}</div>
+        <div id="repView"></div>
+      </div>
     </div>`;
 
   app.querySelectorAll('.tech-row').forEach(b => b.addEventListener('click', () => {
     resetFilters(); state.techs.add(b.dataset.t); location.hash = '#/list';
   }));
+
+  renderReview();
+  $('#repPills').addEventListener('click', e => {
+    const b = e.target.closest('.tf'); if (!b) return;
+    home.repTech = b.dataset.t; home.repIdx = 0;
+    try { localStorage.setItem('repTech', home.repTech); } catch (err) {}
+    renderRep();
+  });
+  renderRep();
+}
+
+// ───────── 오늘의 복습 ─────────
+const home = { reviewIdx: null, revealed: false, repTech: null, repIdx: 0 };
+try { home.repTech = localStorage.getItem('repTech'); } catch (e) {}
+
+function todayIndex() {
+  const d = new Date();
+  let h = d.getFullYear() * 10000 + (d.getMonth() + 1) * 100 + d.getDate();
+  // 날짜 → 섞인 정수 (같은 날엔 같은 문제)
+  h = Math.imul(h ^ (h >>> 16), 0x45d9f3b); h = Math.imul(h ^ (h >>> 16), 0x45d9f3b); h ^= h >>> 16;
+  return (h >>> 0) % P.length;
+}
+
+function renderReview() {
+  if (home.reviewIdx == null) home.reviewIdx = todayIndex();
+  const p = P[home.reviewIdx];
+  const isToday = home.reviewIdx === todayIndex();
+  const tags = [...p.techs].sort((a, b) => p.explicit.includes(b) - p.explicit.includes(a));
+  const methods = p.methods.filter(m => !m.ctor).length;
+  $('#review').innerHTML = `
+    <div class="card-h"><h2>${isToday ? '오늘의 복습' : '복습할 문제'}</h2><span class="hint">${isToday ? '하루 동안 같은 문제' : '무작위로 고름'}</span></div>
+    <div class="card-b">
+      <div class="q"><span class="plat">${platName(p)}</span>${p.num != null ? `<span class="muted" style="font-variant-numeric:tabular-nums;font-size:13px">${p.num}번</span>` : ''}
+        ${p.platform === 'boj' && p.num != null ? `<a class="ext" href="https://www.acmicpc.net/problem/${p.num}" target="_blank" rel="noopener">문제 보기 ↗</a>` : ''}</div>
+      <div class="q-title">${esc(p.title)}</div>
+      <div class="q-meta">내 풀이: 코드 ${p.loc}줄 · 메서드 ${methods}개${p.loopDepth ? ` · 반복문 최대 ${p.loopDepth}중` : ''}</div>
+      <div class="ask">
+        ${home.revealed
+          ? (tags.length ? `<div class="chips">${tags.map(t => `<span class="chip${p.explicit.includes(t) ? ' tagged' : ''}">${esc(tname(t))}</span>`).join('')}</div>` : '<p style="margin:0">감지된 기법이 없습니다. 구현·수학 계열일 가능성이 큽니다.</p>')
+          : `<p>어떤 기법으로 풀었는지 먼저 떠올려 보세요.</p><button class="btn sm" id="reveal">기법 확인</button>`}
+      </div>
+      <div class="actions">
+        <a class="btn primary" href="${href(p)}">내 풀이 보기</a>
+        <button class="btn" id="another">다른 문제</button>
+        ${isToday ? '' : '<button class="btn" id="backToday">오늘 문제로</button>'}
+      </div>
+    </div>`;
+  $('#reveal')?.addEventListener('click', () => { home.revealed = true; renderReview(); });
+  $('#another').addEventListener('click', () => {
+    let i; do { i = Math.floor(Math.random() * P.length); } while (P.length > 1 && i === home.reviewIdx);
+    home.reviewIdx = i; home.revealed = false; renderReview();
+  });
+  $('#backToday')?.addEventListener('click', () => { home.reviewIdx = todayIndex(); home.revealed = false; renderReview(); });
+}
+
+// ───────── 기법별 대표 풀이 ─────────
+// 근거 줄이 있는 풀이를 우선, 그다음 기법 수가 적고(그 기법만 잘 보이게) 코드가 짧은 순
+const repCache = {};
+function repCandidates(t) {
+  if (repCache[t]) return repCache[t];
+  const score = p => p.loc + 25 * p.techs.length;
+  return repCache[t] = P.filter(p => p.techs.includes(t)).sort((a, b) =>
+    ((b.evidence[t]?.length ? 1 : 0) - (a.evidence[t]?.length ? 1 : 0)) || score(a) - score(b));
+}
+
+// 근거 줄이 들어 있는 메서드에서 최대 16줄을 잘라 온다
+function snippet(p, t) {
+  const src = p.source.split('\n');
+  const ev = p.evidence[t] || [];
+  const inner = l => p.methods.filter(m => m.line <= l && l <= m.endLine).sort((a, b) => (a.endLine - a.line) - (b.endLine - b.line))[0];
+  let m = ev.length ? inner(ev[0]) : null;
+  if (!m) {
+    const own = p.methods.filter(x => !x.ctor && x.owner === p.mainClass);
+    m = own.filter(x => x.name !== 'main').sort((a, b) => b.size - a.size)[0] || own[0] || { line: 1, endLine: src.length, name: '' };
+  }
+  const MAX = 16;
+  let from = m.line, to = m.endLine, header = null;
+  if (to - from + 1 > MAX + 4) { // 조금 넘치는 정도면 그대로 전부 보여 줌
+    let anchor = ev.find(l => l >= m.line && l <= m.endLine);
+    if (anchor == null) { // 근거 줄이 없으면 앞부분의 입력 읽기 코드를 건너뜀
+      anchor = m.line;
+      const half = m.line + Math.floor((m.endLine - m.line) * 0.6);
+      for (let i = m.line; i <= half; i++) if (/readLine|nextToken|nextInt|parseInt|split\(/.test(src[i - 1])) anchor = i + 3;
+    }
+    from = Math.max(m.line, anchor - 4);
+    if (from <= m.line + 2) from = m.line; else header = m.line;
+    to = Math.min(m.endLine, from + MAX - 1);
+  }
+  const lines = [];
+  if (header) lines.push(header, 'gap');
+  for (let i = from; i <= to; i++) lines.push(i);
+  if (to < m.endLine) lines.push('gap');
+  const real = lines.filter(x => x !== 'gap');
+  const indent = Math.min(...real.map(i => src[i - 1]).filter(s => s && s.trim()).map(s => s.match(/^\s*/)[0].replace(/\t/g, '    ').length));
+  return { lines, indent: isFinite(indent) ? indent : 0, ev: new Set(ev), method: m.name, evCount: ev.filter(l => real.includes(l)).length };
+}
+
+function renderRep() {
+  if (!home.repTech || !techCount[home.repTech]) home.repTech = techOrder[0];
+  const t = home.repTech;
+  document.querySelectorAll('#repPills .tf').forEach(b => b.setAttribute('aria-pressed', b.dataset.t === t));
+  const cands = repCandidates(t);
+  const idx = home.repIdx % cands.length;
+  const p = cands[idx];
+  const sn = snippet(p, t);
+  const hl = highlight(p.source);
+  const dedent = (html, n) => {
+    let k = 0;
+    while (k < html.length && n > 0 && (html[k] === ' ' || html[k] === '\t')) { n -= html[k] === '\t' ? 4 : 1; k++; }
+    return html.slice(k);
+  };
+  const code = sn.lines.map(l => l === 'gap'
+    ? `<div class="cl gap"><span class="no">⋯</span><span class="tx"> </span></div>`
+    : `<div class="cl${sn.ev.has(l) ? ' hl' : ''}"><span class="no">${l}</span><span class="tx">${dedent(hl[l - 1] || '', sn.indent) || ' '}</span></div>`).join('');
+  const tagged = p.explicit.includes(t);
+  const others = p.techs.filter(x => x !== t);
+  $('#repView').innerHTML = `
+    <div class="rep-view">
+      <div class="rep-info">
+        <p class="nm">${esc(tname(t))}</p>
+        <p class="desc">${esc(TECH_DESC[t] || '')}</p>
+        <div class="prob">
+          <div class="row" style="display:flex;gap:8px;align-items:center"><span class="plat">${platName(p)}</span>${p.num != null ? `<span class="muted" style="font-size:13px;font-variant-numeric:tabular-nums">${p.num}</span>` : ''}</div>
+          <div class="t">${esc(p.title)}</div>
+          <div class="m">코드 ${p.loc}줄${others.length ? ` · 함께 쓴 기법 ${others.map(tname).map(esc).join(', ')}` : ' · 이 기법만 사용'}</div>
+        </div>
+        <div class="acts">
+          <a class="btn sm primary" href="${href(p)}?t=${t}">전체 코드 보기</a>
+          ${cands.length > 1 ? `<button class="btn sm" id="repNext">다른 예시 ${idx + 1}/${cands.length}</button>` : ''}
+          <button class="btn sm" id="repAll">문제 ${techCount[t]}개 모두</button>
+          ${ANIM_OF[t] ? `<a class="btn sm" href="#/algo/${ANIM_OF[t]}">동작 원리 ▶</a>` : ''}
+        </div>
+        <div class="why">${sn.evCount ? `파란 줄은 ${esc(tname(t))}(으)로 판단한 근거입니다.` : tagged ? '파일명·커밋 태그로 분류된 기법이라 근거 줄이 없어, 핵심 메서드를 보여 줍니다.' : ''}</div>
+      </div>
+      <div class="snip">
+        <div class="snip-bar"><span>${esc(sn.method ? sn.method + '()' : p.file)}</span><span class="sel">${esc(p.file)}</span></div>
+        <div class="snip-scroll"><pre class="code">${code}</pre></div>
+      </div>
+    </div>`;
+  $('#repNext')?.addEventListener('click', () => { home.repIdx = idx + 1; renderRep(); });
+  $('#repAll').addEventListener('click', () => { resetFilters(); state.techs.add(t); location.hash = '#/list'; });
 }
 
 function resetFilters() { state.q = ''; gsearch.value = ''; state.plat = 'all'; state.techs.clear(); }
@@ -576,7 +884,7 @@ function callGraph(p) {
 }
 
 // ───────── 상세 ─────────
-function renderDetail(p) {
+function renderDetail(p, preTech) {
   const idx = sortedByDate.indexOf(p);
   const prev = sortedByDate[idx - 1], next = sortedByDate[idx + 1];
   const techs = [...p.techs].sort((a, b) => (p.explicit.includes(b) - p.explicit.includes(a)) || ((p.evidence[b]?.length ? 1 : 0) - (p.evidence[a]?.length ? 1 : 0)));
@@ -613,6 +921,8 @@ function renderDetail(p) {
               ${ev.length ? `<div class="lines">${ev.slice(0, 10).map(l => `<span>L${l}</span>`).join('')}${ev.length > 10 ? `<span>+${ev.length - 10}</span>` : ''}</div>` : ''}
             </button>`; }).join('')}</div>` : '<p class="muted" style="margin:0;font-size:13.5px">코드 패턴으로 감지된 기법이 없습니다. 구현·수학 계열 문제일 가능성이 큽니다.</p>'}
           ${p.extraTags.length ? `<div class="chips" style="margin-top:10px">${p.extraTags.map(t => `<span class="chip tagged">${esc(t)}</span>`).join('')}</div>` : ''}
+          ${(() => { const ids = [...new Set(techs.map(t => ANIM_OF[t]).filter(Boolean))];
+            return ids.length ? `<div class="anim-links"><span>동작 원리 보기</span>${ids.map(a => `<a href="#/algo/${a}">${esc(ANIM[a].name)} ▶</a>`).join('')}</div>` : ''; })()}
           </div></div>
         <div class="card"><div class="card-h"><h2>호출 구조도</h2><span class="hint">노드를 누르면 코드로</span></div>
           <div class="card-b">${callGraph(p)}
@@ -693,6 +1003,12 @@ function renderDetail(p) {
     setRange(a, e, b.textContent.replace(/\s+/g, ' ').trim());
     scrollToLine(a); flash(a);
   }));
+
+  // 대표 풀이에서 넘어온 경우 해당 기법의 근거 줄을 바로 표시
+  if (preTech) {
+    const b = app.querySelector(`.tech-item[data-t="${CSS.escape(preTech)}"]`);
+    if (b) requestAnimationFrame(() => b.click());
+  }
 }
 
 route();
